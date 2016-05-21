@@ -47,5 +47,6 @@ class InitialParametersModel(BaseModel):
                     (self.k_sh * self.alfa_m) / nu_sq,
                     (self.j_n * self.epsilon_m))
 
-        sum_M_sq = reduce(operator.add, [item^2 for item in vars])
+        sum_m_sq = reduce(operator.add, [item^2 for item in vars])
+        return sum_m_sq
 
