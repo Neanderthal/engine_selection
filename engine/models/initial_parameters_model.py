@@ -36,17 +36,20 @@ class InitialParametersModel(BaseModel):
 
         self.nu = 0.85
         self.nu_zero = 0.8
-        self.alfa_zero = 1.2
+        self.alfa_omega = 1.2
 
     def calculate_power(self):
         nu_mul = self.nu * self.nu_zero
         nu_sq = self.nu * sqrt(2)
 
         vars = (self.m_tm / nu_mul, self.m_st / nu_mul,
-                    (self.q_n * self.omega_m) / nu_sq,
-                    (self.k_sh * self.alfa_m) / nu_sq,
-                    (self.j_n * self.epsilon_m))
+                (self.q_n * self.omega_m) / nu_sq,
+                (self.k_sh * self.alfa_m) / nu_sq,
+                (self.j_n * self.epsilon_m))
 
-        sum_m_sq = reduce(operator.add, [item^2 for item in vars])
-        return sum_m_sq
+        sum_m_sq = reduce(operator.add, [item ^ 2 for item in vars])
+        sqrt_arg = sum_m_sq + (self.j_n * self.epsilon_m * sqrt(
+            sum_m_sq)) / self.nu * sqrt(2)
+        p_tr = (sqrt(2) * self.omega_m / self.alfa_omega)*sqrt(sqrt_arg)
 
+        return p_tr

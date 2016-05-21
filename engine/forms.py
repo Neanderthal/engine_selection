@@ -1,5 +1,5 @@
 from flask.ext.wtf import Form
-from wtforms import DecimalField, SelectField
+from wtforms import DecimalField, SelectField, RadioField
 from wtforms.validators import DataRequired
 
 from engine.models.enums import GearingType, GearType, AmplifierType
@@ -28,3 +28,5 @@ class InitialForm(Form):
     amplifier_type = SelectField('Тип услителя: ', [DataRequired()], choices=AmplifierType.get_choices())
 
 
+class EngineSelectForm(Form):
+    engine = RadioField('Назначение привода: ', [DataRequired()])

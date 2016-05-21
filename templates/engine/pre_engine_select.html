@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}
+    Выбор двигателя
+{% endblock %}
+{% block header %}
+    Выбор двигателя
+{% endblock %}
+{% block content %}
+    <h3>Выбираем двигатель для рассчитаннй мощности</h3>
+    <p>Мощность - {{  power  }}</p>
+    {% from "macros.html" import render_field %}
+      <form method="POST" action="." class="form">
+      {% for subfield in form.radio %}
+        <tr>
+            <td>{{ subfield }}</td>
+            <td>{{ subfield.label }}</td>
+        </tr>
+    {% endfor %}
+        <li><a href="{{ item.href }}">{{ item.caption }}</a></li>
+    {% endfor %}
+        {{ render_field(form.gearing_type, class="select") }}
+          <h3>Сведения о характере и параметрах нагрузки</h3>
+        {{ render_field(form.m_st, class="input text") }}
+          <br />
+        <input type="submit" value="Рассчитать" class="button green">
+      </form>
+{% endblock %}
