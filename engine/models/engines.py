@@ -13,5 +13,3 @@ class Engine(PeeweeModel):
     rotor_momentum = DecimalField() #Jd
     characteristical_hardness = DecimalField() #gd
     momentum_overload_coefficient = DecimalField() #lambda
-
-    is_relative = BooleanField()

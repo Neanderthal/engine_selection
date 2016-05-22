@@ -1,5 +1,5 @@
 from flask.ext.wtf import Form
-from wtforms import DecimalField, SelectField, RadioField
+from wtforms import DecimalField, SelectField, RadioField, StringField
 from wtforms.validators import DataRequired, Optional
 
 from engine.models.enums import GearingType, GearType, AmplifierType
@@ -46,3 +46,20 @@ class InitialForm(Form):
 
 class EngineSelectForm(Form):
     engine = RadioField('Назначение привода: ', [DataRequired()])
+
+
+
+class EngineForm(Form):
+    name = StringField('Наименование: ', [DataRequired()])
+    nominal_power = DecimalField('Мст - Номинальная мощность: ', [Optional()])
+    nominal_momentum = DecimalField('Мтм - Номиальный момент: ', [DataRequired()])
+    start_momentum = DecimalField('qн - Стартовый момент: ',
+                       [Optional()])
+    nominal_angular_velocity = DecimalField('Кш - Номинальая угловая скорость: ', [Optional()])
+    static_loosing_momentum = DecimalField('Jn - Потери: ', [DataRequired()])
+    rotor_momentum = DecimalField('\u03B1m - Момент ротора: ',
+                          [Optional()])
+    characteristical_hardness = DecimalField('\u03A9m - Жесткость характеристики: ',
+                           [DataRequired()])
+    momentum_overload_coefficient = DecimalField('\u03B5m - перегрузка: ',
+                             [Optional()])

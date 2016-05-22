@@ -8,14 +8,13 @@ SECRET_KEY = 'somethingimpossibletoguess'
 APPLICATION_ROOT = _basedir
 SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(_basedir, 'app.db')
 DATABASE_CONNECT_OPTIONS = {}
-
+SERVER_NAME = '127.0.0.1:5000'
 THREADS_PER_PAGE = 8
 
+SESSION_COOKIE_PATH = '/'
+SESSION_COOKIE_DOMAIN = '127.0.0.1'
 #TODO:Разобраться почему не работает и включить
 WTF_CSRF_ENABLED = False
 WTF_CSRF_SECRET_KEY = "somethingimpossibletoguess"
 
-RECAPTCHA_USE_SSL = False
-RECAPTCHA_PUBLIC_KEY = '6LeYIbsSAAAAACRPIllxA7wvXjIE411PfdB2gt2J'
-RECAPTCHA_PRIVATE_KEY = '6LeYIbsSAAAAAJezaIq3Ft_hSTo0YtyeFG-JgRtu'
-RECAPTCHA_OPTIONS = {'theme': 'white'}
+SESSION_PERMANENT = True
