@@ -1,8 +1,9 @@
-from peewee import Model, CharField, DateField, BooleanField, DecimalField
-from application import db
+from peewee import  CharField, DateField, BooleanField, DecimalField
+
+from engine.models.base_model import PeeweeModel
 
 
-class Engine(Model):
+class Engine(PeeweeModel):
     name = CharField() #Pn
     nominal_power = DecimalField() #MN
     nominal_momentum = DecimalField() #omega_n
@@ -14,6 +15,3 @@ class Engine(Model):
     momentum_overload_coefficient = DecimalField() #lambda
 
     is_relative = BooleanField()
-
-    class Meta:
-        database = db

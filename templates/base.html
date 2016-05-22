@@ -6,8 +6,11 @@
 </head>
 <body>
 
-    <div id="header">{% block error_message %}{% endblock %}</div>
-    <div id="header">{% block header %}{% endblock %}</div>
+
+    <div id="header">{% block header %}
+    {% endblock %}
+        <div id="error">{{ error_message }}</div>
+    </div>
     <div id="content">{% block content %}{% endblock %}</div>
 </body>
 </html>

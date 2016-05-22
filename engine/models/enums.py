@@ -7,10 +7,10 @@ class BaseEnum(object):
 
 
 class GearingType(BaseEnum):
-    PA = 0
-    PP = 1
-    RP = 2
-    PS = 3
+    PA = 1
+    PP = 2
+    RP = 3
+    PS = 4
 
     values = {
         PA:'приводы антенн радиолокаторов',
@@ -22,9 +22,9 @@ class GearingType(BaseEnum):
 
 
 class GearType(BaseEnum):
-    GearWheels = 0
-    SpiralGear = 1
-    CombinedGear = 2
+    GearWheels = 1
+    SpiralGear = 2
+    CombinedGear = 3
 
     values = {
         GearWheels:'Зубчатая передача',
@@ -33,8 +33,8 @@ class GearType(BaseEnum):
     }
 
 class AmplifierType(BaseEnum):
-    Thyristor = 0
-    Transistor = 1
+    Thyristor = 1
+    Transistor = 2
 
     values = {
         Transistor:'Транзисторный',

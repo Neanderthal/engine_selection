@@ -3,6 +3,7 @@ from flask import Blueprint, request, render_template, flash, g, session, \
 
 import config
 from engine.forms import InitialForm, EngineSelectForm
+from engine.models.base_model import database
 from engine.models.engines import Engine
 from engine.models.initial_parameters_model import InitialParametersModel
 
@@ -16,6 +17,14 @@ def before_request():
     if InitialParametersModel.__name__ in session:
         g.initials.load()
 
+@engine.before_request
+def _db_connect():
+    database.connect()
+
+@engine.teardown_request
+def _db_close(exc):
+    if not database.is_closed():
+        database.close()
 
 @engine.route('/')
 def home():
@@ -29,12 +38,11 @@ def initials():
     """
     form = InitialForm(request.form, obj=g.initials)
     if form.validate_on_submit():
-        initials = InitialParametersModel()
-        initials.update(form.data)
-        initials.save()
-        session['calculated_power'] = initials.calculate_power()
-        return redirect(url_for('engine.pre_engine_select'))
-    flash('Что-то не так', 'error-message')
+        form.populate_obj(g.initials)
+        g.initials.save()
+        session['calculated_power'] = g.initials.calculate_power()
+        return redirect(url_for('.pre_engine_select'))
+    flash('Что-то не так: {}'.format(form.errors), 'error_message')
     return render_template("engine/initial.html", form=form)
 
 

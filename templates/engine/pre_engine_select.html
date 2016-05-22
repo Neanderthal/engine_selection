@@ -10,6 +10,7 @@
     <p>Мощность - {{  power  }}</p>
     {% from "macros.html" import render_field %}
       <form method="POST" action="." class="form">
+          {{ form.hidden_tag() }}
       {% for subfield in form.radio %}
         <tr>
             <td>{{ subfield }}</td>
