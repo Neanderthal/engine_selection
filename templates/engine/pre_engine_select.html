@@ -9,41 +9,45 @@
     <h3>Выбираем двигатель для рассчитаннй мощности</h3>
     <p>Мощность - {{ power }}</p>
     {% from "macros.html" import render_field %}
-    <form method="POST" action="." class="form">
-        {{ form.hidden_tag() }}
-        <table>
-            <thead>
-            <tr>
-                <td>Наименование</td>
-                <td>Номинальная мощность</td>
-                <td>Номинальный момент</td>
-                <td>Пусковой момент</td>
-                <td>Номинальная угловая скорость</td>
-                <td>Статиеский момент потерь</td>
-                <td>Момент инерции ротора</td>
-                <td>жесткость мех. хар.-ки</td>
-            </tr>
-            </thead>
-            {% for subfield in form.engine %}
-
+    <form method="POST" action="." class="pure-form pure-form-aligned">
+        <fieldset>
+            {{ form.hidden_tag() }}
+            <table class="pure-table">
+                <thead>
                 <tr>
-                    <td>
-                        <label>
-                            <input type="radio" name="browser"
-                                   value="{{ subfield.id }}">
-                            {{ subfield.name }}</label></td>
-                    <td>{{ subfield.nominal_power }}</td>
-                    <td>{{ subfield.nominal_momentum }}</td>
-                    <td>{{ subfield.start_momentum }}</td>
-                    <td>{{ subfield.nominal_angular_velocity }}</td>
-                    <td>{{ subfield.static_loosing_momentum }}</td>
-                    <td>{{ subfield.characteristical_hardness }}</td>
-                    <td>{{ subfield.momentum_overload_coefficient }}</td>
+                    <td>Наименование</td>
+                    <td>Номинальная мощность</td>
+                    <td>Номинальный момент</td>
+                    <td>Пусковой момент</td>
+                    <td>Номинальная угловая скорость</td>
+                    <td>Статиеский момент потерь</td>
+                    <td>Момент инерции ротора</td>
+                    <td>жесткость мех. хар.-ки</td>
                 </tr>
-            {% endfor %}
-        </table>
-        <br/>
-        <input type="submit" value="Рассчитать" class="button green">
+                </thead>
+                <tbody>
+                    {% for subfield in form.engine %}
+
+                        <tr>
+                            <td>
+                                <label>
+                                    <input type="radio" name="browser"
+                                           value="{{ subfield.id }}">
+                                    {{ subfield.name }}</label></td>
+                            <td>{{ subfield.nominal_power }}</td>
+                            <td>{{ subfield.nominal_momentum }}</td>
+                            <td>{{ subfield.start_momentum }}</td>
+                            <td>{{ subfield.nominal_angular_velocity }}</td>
+                            <td>{{ subfield.static_loosing_momentum }}</td>
+                            <td>{{ subfield.characteristical_hardness }}</td>
+                            <td>{{ subfield.momentum_overload_coefficient }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <br/>
+            <input type="submit" value="Рассчитать" class="pure-button pure-button-primary">
+        </fieldset>
     </form>
     <a href="{{ url_for('.add_engine') }}">Добавить двигатель</a>
 
