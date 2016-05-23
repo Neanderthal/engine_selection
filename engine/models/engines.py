@@ -1,5 +1,4 @@
-from peewee import CharField, DateField, BooleanField, DecimalField, \
-    PrimaryKeyField
+from peewee import CharField, DecimalField
 
 from engine.models.base_model import PeeweeModel
 
