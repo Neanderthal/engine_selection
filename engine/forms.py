@@ -1,5 +1,6 @@
 from flask.ext.wtf import Form
-from wtforms import DecimalField, SelectField, RadioField, StringField
+from wtforms import DecimalField, SelectField, RadioField, StringField, \
+    IntegerField, HiddenField
 from wtforms.validators import DataRequired, Optional
 
 from engine.models.enums import GearingType, GearType, AmplifierType
@@ -50,6 +51,7 @@ class EngineSelectForm(Form):
 
 
 class EngineForm(Form):
+    id = HiddenField()
     name = StringField('Наименование: ', [DataRequired()])
     nominal_power = DecimalField('Мст - Номинальная мощность: ', [Optional()])
     nominal_momentum = DecimalField('Мтм - Номиальный момент: ', [DataRequired()])

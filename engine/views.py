@@ -2,7 +2,7 @@ from flask import Blueprint, request, render_template, flash, g, session, \
     redirect, url_for
 
 import config
-from engine.forms import InitialForm, EngineSelectForm
+from engine.forms import InitialForm, EngineSelectForm, EngineForm
 from engine.models.base_model import database
 from engine.models.engines import Engine
 from engine.models.initial_parameters_model import InitialParametersModel
@@ -52,8 +52,6 @@ def initials_get():
     form = InitialForm(request.form, obj=g.initials)
     return render_template("engine/initial.html", form=form)
 
-
-
 @engine.route('/pre_engine_select/', methods=['GET', 'POST'])
 def pre_engine_select():
     """
@@ -64,7 +62,20 @@ def pre_engine_select():
     form = EngineSelectForm(request.form)
     form.engine = engines
     if form.validate_on_submit():
-        return redirect(url_for('engine.home'))
+        return redirect(url_for('.home'))
     return render_template("engine/pre_engine_select.html", form=form,
                            engines=engines, power=power)
 
+@engine.route('/add_engine/', methods=['GET', 'POST'])
+def add_engine():
+    """
+    Форма добавления двигателя по результатам рассчета
+    """
+    form = EngineForm(request.form)
+    if form.validate_on_submit():
+        engine = Engine()
+        form.populate_obj(engine)
+        engine.id = None if engine.id == '' else engine.id
+        engine.save()
+        return redirect(url_for('.add_engine'))
+    return render_template("engine/add_engine.html", form=form)
