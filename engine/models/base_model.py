@@ -4,26 +4,32 @@ from peewee import SqliteDatabase, Model
 
 database = SqliteDatabase('my_app.db')
 
+
 class PeeweeModel(Model):
     class Meta:
         database = database
 
+
 class BaseModel:
     def __init__(self):
         pass
+
     def save(self, session):
-        for key, value in self.list_of_public():
-            session[key] = json.dumps(value, use_decimal=True)
+        session[type(self).__name__] = json.dumps(dict(self.list_of_public()), use_decimal=True)
 
     def list_of_public(self):
-        return {key: str(value) for key, value in self.__dict__.items() if
-                   not key.startswith('_')}.items()
+        return {key: value for key, value in self.__dict__.items() if
+                not key.startswith('_')}.items()
 
     def update(self, data):
-        self.__dict__.update(data)
+        self.__dict__.update(
+            {key: value for key, value in data if key in self.__dict__})
 
     def load(self, session):
-        self.update(json.loads(session[__name__]))
+        if(session.get(type(self).__name__)):
+            vars = json.loads(session.get(type(self).__name__), use_decimal=True)
+            self.update(vars)
+            pass
 
-    def __iter__ (self):
+    def __iter__(self):
         return self.list_of_public()

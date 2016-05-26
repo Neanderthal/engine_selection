@@ -37,18 +37,35 @@ class InitialParametersModel(BaseModel):
         self.nu_zero = Decimal(0.8)
         self.alfa_omega = Decimal(1.2)
 
-    def calculate_power(self):
-        nu_mul = self.nu * self.nu_zero
-        nu_sq = self.nu * Decimal.sqrt(Decimal(2))
+    def update(self, values):
+        def sets(name):
+            if not values[name] == 'None' and not values[name] == None:
+                return Decimal(values[name])
+            else: return None
+        self.gear_type = sets('gear_type')
+        self.m_st = sets('m_st')
+        self.m_tm = sets('m_tm')
+        self.q_n = sets('q_n')
+        self.k_sh = sets('k_sh')
+        self.j_n = sets('j_n')
+        self.alfa_m = sets('alfa_m')
+        self.omega_m = sets('omega_m')
+        self.epsilon_m = sets('epsilon_m')
 
-        vars = (self.m_tm / nu_mul, self.m_st / nu_mul,
-                (self.q_n * self.omega_m) / nu_sq if self.q_n else 0,
-                (self.k_sh * self.alfa_m) / nu_sq if self.k_sh else 0,
-                (self.j_n * self.epsilon_m) /nu_sq if self.q_n else 0)
+        self.delta = sets('delta')
+        self.chi_p = sets('chi_p')
+        self.chi_s = sets('chi_s')
+        self.chi_q = sets('chi_q')
+        self.sigma = sets('sigma')
+        self.t_n = sets('gear_type')
+        self.M = sets('M')
 
-        sum_m_sq = reduce(operator.add, [item**2 for item in vars])
-        sqrt_arg = sum_m_sq + (self.j_n * self.epsilon_m * Decimal.sqrt(
-            sum_m_sq)) / (self.nu * Decimal.sqrt(Decimal(2)))
-        p_tr = (Decimal.sqrt(Decimal(2)) * self.omega_m / self.alfa_omega)*Decimal.sqrt(sqrt_arg)
+        self.gear_type = GearType.values[int(values['gear_type'])]
+        self.amplifier_type = AmplifierType.values[int(values['amplifier_type'])]
 
-        return p_tr
+        self.Kr = Decimal(1.1)
+        self.Kq = Decimal(1.5)
+
+        self.nu = Decimal(0.85)
+        self.nu_zero = Decimal(0.8)
+        self.alfa_omega = Decimal(1.2)
