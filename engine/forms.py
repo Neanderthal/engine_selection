@@ -46,7 +46,7 @@ class InitialForm(Form):
 
 
 class EngineSelectForm(Form):
-    engine = RadioField('Назначение привода: ', [DataRequired()])
+    engine = RadioField('Назначение привода: ',  [DataRequired()], coerce = int)
 
 
 
